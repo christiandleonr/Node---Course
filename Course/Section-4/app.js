@@ -1,24 +1,12 @@
 const chalk = require('chalk')
 const yargs = require('yargs')
-const { argv } = require('yargs')
+const { argv, demand, demandOption } = require('yargs')
+const notes = require('./notes')
+const { removeNote } = require('./notes')
 
-const greenMessage = chalk.green.underline('Success!')
-const yellowMessage = chalk.yellow.underline('Warning!')
-const redMessage = chalk.red.underline('Error!')
-console.log(greenMessage, yellowMessage, redMessage)
-
-const colorAdd = chalk.blue.underline
 const colorRemove = chalk.red.underline
 const colorRead = chalk.cyanBright.underline
 const colorList = chalk.magenta.underline
-
-// const command = process.argv[2]
-
-// if (command === 'add'){
-//     console.log(colorAdd('Adding note!'))
-// } else if (command === 'remove'){
-//     console.log(colorRemove('Removing note!'))
-// }
 
 // Customize yargs version
 yargs.version('1.1.0')
@@ -40,19 +28,9 @@ yargs.command({
         }
     },
     handler: function(){
-        console.log(colorAdd('Title : '+argv.title))
-        console.log(colorAdd('body : '+argv.body))
+        notes.addNote(argv.title, argv.body)
     }
 })
-
-// Create remove command
-yargs.command({
-    command: 'remove',
-    describe: 'Remove a note',
-    handler: function(){
-        console.log(colorRemove('Removing note!'))
-    }
-});
 
 // Challenge: Add two new commands
 // 1. Setup command to support "list" command (print placeholder message for now)
@@ -74,5 +52,38 @@ yargs.command({
         console.log(colorRead('Reading a note!'))
     }
 })
+
+// Challenge: setup command option and function
+// 1. Setup the remove command to take a required "--title" option
+// 2. Create and export a remove command handler
+// 3. Call remove in remove command handler
+// 4. Have removeNote log the title of the note to be removed
+// 5. Test your work using: node app.js remove --title="some title"
+
+// Challenge: Wire up removeNote
+// 1. Load existing notes
+// 2. Use array filter method to remove the matching note (if any)
+// 3. Save the newly created array
+// 4. Test your work with a title that exists and a title that doesn't exist
+
+// Challenge: Use chalk to provide useful logs for remove
+// 1. If a note is removed, print "Note removed!" with a green background
+// 2. If no note is removed, print "No note found!" with a red background
+
+yargs.command({
+    command: 'remove',
+    describe: 'Remove a note by the title',
+    builder: {
+        title: {
+            describe: 'The title of the note that you want to remove',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function(argv){
+        removeNote(argv.title)
+    }
+})
+
 
 console.log(yargs.argv)
