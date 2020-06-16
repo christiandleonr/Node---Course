@@ -8,6 +8,11 @@ const colorRemove = chalk.red.underline
 const colorRead = chalk.cyanBright.underline
 const colorList = chalk.magenta.underline
 
+// Goal: Refactor all functions
+// 1. If function is a methos, use ES6 method definition syntax
+// 2. Otherwise, use most concise arrow function possible
+// 3. Test your work
+
 // Customize yargs version
 yargs.version('1.1.0')
 
@@ -27,7 +32,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(){
+    handler(){
         notes.addNote(argv.title, argv.body)
     }
 })
@@ -40,7 +45,7 @@ yargs.command({
 yargs.command({
     command: 'list',
     describe: 'List the notes',
-    handler: function(){
+    handler(){
         console.log(colorList('Listing out all the notes!'))
     }
 })
@@ -48,7 +53,7 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'Read a note',
-    handler: function(){
+    handler(){
         console.log(colorRead('Reading a note!'))
     }
 })
@@ -80,7 +85,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         removeNote(argv.title)
     }
 })

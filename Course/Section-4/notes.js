@@ -6,17 +6,13 @@ const titleTaken = chalk.yellow.underline
 const removedNote = chalk.green.underline
 const notFoundNote = chalk.red.underline
 
-const getNotes = function() {
-    return 'Your notes...'
-}
+const getNotes = () => 'Your notes...'
 
-const addNote = function (title, body){
+const addNote = (title, body) => {
     const notes = loadNotes()
 
     // Filter function works like a loop
-    const duplicateNotes = notes.filter(function(note){
-        return note.title === title
-    })
+    const duplicateNotes = notes.filter((note) => note.title === title)
     
     // duplicateNotes is a list of elements {title:, body:}
     if(duplicateNotes.length === 0){
@@ -33,12 +29,12 @@ const addNote = function (title, body){
     
 }
 
-const saveNotes = function(notes){
+const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNotes = function (){
+const loadNotes = () => {
     try{
         const dataBuffer =  fs.readFileSync('notes.json')
         const dataJSON = dataBuffer.toString()
@@ -48,16 +44,14 @@ const loadNotes = function (){
     }
 }
 
-const removeNote = function(title){
+const removeNote = (title) => {
     const notes = loadNotes()
-    const notesToKeep = notes.filter(function(note){
-        return note.title !== title
-    })
+    const notesToKeep = notes.filter((note) => note.title !== title)
 
     if(notes.length === notesToKeep.length){
         console.log(notFoundNote('Something went wrong! We cant found the note with the title : '+title))
     }else{
-        console.log(removedNote('Note with title     "'+title+'" was removed!'))
+        console.log(removedNote('Note with title "'+title+'" was removed!'))
         saveNotes(notesToKeep)
     }
 }
