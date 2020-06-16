@@ -8,16 +8,17 @@ const notFoundNote = chalk.red.underline
 const yourNotes = chalk.magenta.underline
 const yourNotesLines = chalk.magenta
 
-const getNotes = () => 'Your notes...'
-
 const addNote = (title, body) => {
     const notes = loadNotes()
 
     // Filter function works like a loop
-    const duplicateNotes = notes.filter((note) => note.title === title)
+    // const duplicateNotes = notes.filter((note) => note.title === title)
+    
+    // .find method stops when find the first that match with which your are looking for
+    const duplicateNote = notes.find((note) => note.title === title)
     
     // duplicateNotes is a list of elements {title:, body:}
-    if(duplicateNotes.length === 0){
+    if(!duplicateNote){
         notes.push({
             title: title,
             body: body
@@ -77,9 +78,31 @@ const listNotes = () => {
     console.log(yourNotesLines('===================='))
 }
 
+// Goal: wire up read command
+// 1. Setup --title opotion for read commnad
+// 2. Create readNote in notes.js
+// - Search for note by title
+// - Find note and print title (styled) and body (plain)
+// - No note found? Print error in red
+// 3. Have the command handler call the function
+// 4. Test your work by running a couple command
+
+const readNote = (title) => {
+    const notes = loadNotes()
+
+    const noteFound = notes.find((note) => note.title === title)
+
+    if(noteFound){
+        console.log(yourNotes(noteFound.title))
+        console.log(noteFound.body)
+    }else{
+        console.log(notFoundNote('Note not found'))
+    }
+}
+
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
     removeNote: removeNote,
-    listNotes: listNotes
+    listNotes: listNotes,
+    readNote: readNote
 }

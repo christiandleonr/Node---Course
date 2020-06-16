@@ -2,7 +2,7 @@ const chalk = require('chalk')
 const yargs = require('yargs')
 const { argv, demand, demandOption } = require('yargs')
 const notes = require('./notes')
-const { removeNote, listNotes } = require('./notes')
+const { removeNote, listNotes, readNote } = require('./notes')
 
 const colorRemove = chalk.red.underline
 const colorRead = chalk.cyanBright.underline
@@ -50,14 +50,6 @@ yargs.command({
     }
 })
 
-yargs.command({
-    command: 'read',
-    describe: 'Read a note',
-    handler(){
-        console.log(colorRead('Reading a note!'))
-    }
-})
-
 // Challenge: setup command option and function
 // 1. Setup the remove command to take a required "--title" option
 // 2. Create and export a remove command handler
@@ -87,6 +79,21 @@ yargs.command({
     },
     handler(argv){
         removeNote(argv.title)
+    }
+})
+
+yargs.command({
+    command: 'read',
+    describe: 'Read a note by the title',
+    builder: {
+        title: {
+            describe: 'The title of the note that you want to read',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv){
+        readNote(argv.title)
     }
 })
 
