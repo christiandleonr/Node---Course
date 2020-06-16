@@ -57,7 +57,7 @@ const removeNote = function(title){
     if(notes.length === notesToKeep.length){
         console.log(notFoundNote('Something went wrong! We cant found the note with the title : '+title))
     }else{
-        console.log(removedNote('Note with title "'+title+'" was removed!'))
+        console.log(removedNote('Note with title     "'+title+'" was removed!'))
         saveNotes(notesToKeep)
     }
 }
