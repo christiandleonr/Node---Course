@@ -5,6 +5,8 @@ const noteAdded = chalk.green.underline
 const titleTaken = chalk.yellow.underline
 const removedNote = chalk.green.underline
 const notFoundNote = chalk.red.underline
+const yourNotes = chalk.magenta.underline
+const yourNotesLines = chalk.magenta
 
 const getNotes = () => 'Your notes...'
 
@@ -56,8 +58,28 @@ const removeNote = (title) => {
     }
 }
 
+// Goal: Wire up list command
+// 1. Create and export listNotes from notes.js
+// - "Your notes" using chalk
+// - Print note title for each note
+// 2. Call listNotes from command handler
+// 3. Test your work
+
+const listNotes = () => {
+    const notes = loadNotes()
+
+    console.log(yourNotes('Your notes...'))
+
+    console.log(yourNotesLines('===================='))
+    notes.forEach((note) => {
+        console.log(note.title)
+    })
+    console.log(yourNotesLines('===================='))
+}
+
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes
 }

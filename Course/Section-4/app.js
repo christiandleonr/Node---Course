@@ -2,7 +2,7 @@ const chalk = require('chalk')
 const yargs = require('yargs')
 const { argv, demand, demandOption } = require('yargs')
 const notes = require('./notes')
-const { removeNote } = require('./notes')
+const { removeNote, listNotes } = require('./notes')
 
 const colorRemove = chalk.red.underline
 const colorRead = chalk.cyanBright.underline
@@ -46,7 +46,7 @@ yargs.command({
     command: 'list',
     describe: 'List the notes',
     handler(){
-        console.log(colorList('Listing out all the notes!'))
+        listNotes()
     }
 })
 
@@ -89,6 +89,5 @@ yargs.command({
         removeNote(argv.title)
     }
 })
-
 
 console.log(yargs.argv)
