@@ -1,12 +1,9 @@
-console.log('Starting')
+const request = require('request')
 
-// Wait a specific time to execute code
-setTimeout(() => {
-    console.log('2 Second Timer')
-}, 2000)
+const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa548761fb4a91&query=25.0,%20-107.5'
 
-setTimeout(() => {
-    console.log('0 Second Timer')
-}, 0)
+request({ url: url }, (error, response) => {
+    const data = JSON.parse(response.body)
 
-console.log('Stopping')
+    console.log(data.current.temperature)
+}) 
