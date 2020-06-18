@@ -14,13 +14,19 @@ const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa
 // 1. Test your work
 
 
-request({ url: url, json: true}, (error, response) => {
-    temperature = response.body.current.temperature
-    feelslike = response.body.current.feelslike
-    wheatherDescription = response.body.current.weather_descriptions[0]
+// request({ url: url, json: true}, (error, response) => {
+//     if (error) {
+//         console.log('Unable to connect to weather service!')
+//     } else if (response.body.error) {
+//         console.log('Unable to find location')
+//     } else {
+//         temperature = response.body.current.temperature
+//         feelslike = response.body.current.feelslike
+//         wheatherDescription = response.body.current.weather_descriptions[0]
 
-    console.log(wheatherDescriptionColor(wheatherDescription)+ ". It is currently "  + temperatureColor(temperature) + " degrees out. It feels like " + feelslikeColor(feelslike) + " degrees out.")
-}) 
+//         console.log(wheatherDescriptionColor(wheatherDescription)+ ". It is currently "  + temperatureColor(temperature) + " degrees out. It feels like " + feelslikeColor(feelslike) + " degrees out.")
+//     }
+// }) 
 
 // Geocoding
 // Address -> Lat/Log -> Weather
@@ -31,12 +37,24 @@ request({ url: url, json: true}, (error, response) => {
 // 3. Print both the latitude and longitude to the terminal
 // 4. Test your work
 
+// Goal: Handle errors for geocoding request
+// 1. Setup an error handler for low-level errors
+// 2. Test by disabling network request and running app
+// 3. Setup error handling for no matching results
+// 4. Test by alterning the search term and running the app
+
 
 const geocodeUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Culiacan.json?access_token=pk.eyJ1IjoiY2hyaXN0aWFuZGxlb25yIiwiYSI6ImNrYmxhejhvYTBveGIzM3M0dGo2ZjRqY28ifQ.EV7x_SLKlgFOvciJlfFLGQ&limit=1'
 
 request({url: geocodeUrl, json: true}, (error, response) => {
-    latitude = response.body.features[0].center[0]
-    longitude = response.body.features[0].center[1]
-
-    console.log('Latitude : ' + latitudeColor(latitude) + ', Longitude : ' + longitudeColor(longitude))
+    if (error){
+        console.log('Unable to connect to location service!')
+    }else if (response.body.features.length === 0){
+        console.log('Unable to find location, Try another search.')
+    }else {
+        latitude = response.body.features[0].center[0]
+        longitude = response.body.features[0].center[1]
+    
+        console.log('Latitude : ' + latitudeColor(latitude) + ', Longitude : ' + longitudeColor(longitude))
+    }
 })
