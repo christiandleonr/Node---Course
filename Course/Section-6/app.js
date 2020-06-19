@@ -58,3 +58,5 @@ request({url: geocodeUrl, json: true}, (error, response) => {
         console.log('Latitude : ' + latitudeColor(latitude) + ', Longitude : ' + longitudeColor(longitude))
     }
 })
+
+
