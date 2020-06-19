@@ -1,5 +1,5 @@
-const request = require('request')
 const chalk = require('chalk')
+const geocode = require('./utils/geocode')
 
 temperatureColor = chalk.yellow.underline
 feelslikeColor = chalk.red.underline
@@ -7,7 +7,7 @@ wheatherDescriptionColor = chalk.cyan.underline
 latitudeColor = chalk.magenta.underline
 longitudeColor = chalk.green.underline
 
-const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa548761fb4a91&query=25.0,%20-107.5&units=m'
+// const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa548761fb4a91&query=25.0,%20-107.5&units=m'
 
 // Goal: Print a small forecast to the user
 // 1. Print "It is currently 9 degress out. It feels like 5 degress out"
@@ -43,20 +43,9 @@ const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa
 // 3. Setup error handling for no matching results
 // 4. Test by alterning the search term and running the app
 
-
-const geocodeUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Culiacan.json?access_token=pk.eyJ1IjoiY2hyaXN0aWFuZGxlb25yIiwiYSI6ImNrYmxhejhvYTBveGIzM3M0dGo2ZjRqY28ifQ.EV7x_SLKlgFOvciJlfFLGQ&limit=1'
-
-request({url: geocodeUrl, json: true}, (error, response) => {
-    if (error){
-        console.log('Unable to connect to location service!')
-    }else if (response.body.features.length === 0){
-        console.log('Unable to find location, Try another search.')
-    }else {
-        latitude = response.body.features[0].center[0]
-        longitude = response.body.features[0].center[1]
-    
-        console.log('Latitude : ' + latitudeColor(latitude) + ', Longitude : ' + longitudeColor(longitude))
-    }
+geocode('New York', (error, data) => {
+    console.log(error)
+    console.log(data)
 })
 
 
