@@ -12,15 +12,15 @@ longitudeColor = chalk.green.underline
 const forecast = (latitude, longitude, callback) => {
     const url = 'http://api.weatherstack.com/current?access_key=663ecca95d1ba31abcaa548761fb4a91&query='+ latitude +','+ longitude +'&units=m'
 
-    request({url: url, json: true}, (error, response) => {
+    request({url: url, json: true}, (error, { body }) => {
         if(error) {
             callback('Unable to connect to weather service!', undefined)
-        }else if(response.body.error){
+        }else if(body.error){
             callback('Unable to find location', undefined)
         }else {
-            temperature = response.body.current.temperature
-            feelslike = response.body.current.feelslike
-            wheatherDescription = response.body.current.weather_descriptions[0]
+            temperature = body.current.temperature
+            feelslike = body.current.feelslike
+            wheatherDescription = body.current.weather_descriptions[0]
 
             callback(undefined, wheatherDescriptionColor(wheatherDescription)+ ". It is currently "  + temperatureColor(temperature) + " degrees out. It feels like " + feelslikeColor(feelslike) + " degrees out.")
         }
