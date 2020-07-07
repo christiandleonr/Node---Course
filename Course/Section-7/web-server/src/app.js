@@ -46,6 +46,27 @@ app.get('/weather', (req, res) => {
     })
 })
 
+// This route match with whatever that start with /help/...
+
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: 'Ups.. We can not found this page',
+        errorMessage: 'Help article not found',
+        name: 'Christian Ramirez'
+    })
+})
+
+// We can use * to 404 page but always have to be in the end
+// * means that whatever match 
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: 'Ups.. We can not found this page',
+        errorMessage: 'This route does not match with anyone that we are created',
+        name: 'Christian Ramirez'
+    })
+})
+
 // Start the server
 // 3000 is the port that we will use
 
