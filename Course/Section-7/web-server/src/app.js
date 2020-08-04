@@ -46,6 +46,12 @@ app.get('/weather', (req, res) => {
     })
 })
 
+app.get('/products', (req, res) => {
+    res.send({
+        products: []
+    })
+})
+
 // This route match with whatever that start with /help/...
 
 app.get('/help/*', (req, res) => {
