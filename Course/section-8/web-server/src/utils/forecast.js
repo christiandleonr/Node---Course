@@ -22,7 +22,7 @@ const forecast = (latitude, longitude, callback) => {
             feelslike = body.current.feelslike
             wheatherDescription = body.current.weather_descriptions[0]
 
-            callback(undefined, wheatherDescriptionColor(wheatherDescription)+ ". It is currently "  + temperatureColor(temperature) + " degrees out. It feels like " + feelslikeColor(feelslike) + " degrees out.")
+            callback(undefined, wheatherDescription + ". It is currently "  + temperature + " degrees out. It feels like " + feelslike + " degrees out.")
         }
     })
 }
