@@ -54,7 +54,7 @@ app.get('/weather', (req, res) => {
 
             forecast(latitude, longitude, (error, data) =>{
                 if(error){
-                    return console.log(error)
+                    return res.send({error})
                 }
 
                 res.send({
@@ -65,8 +65,6 @@ app.get('/weather', (req, res) => {
             })
         })
     }
-
-    
 })
 
 //Goal: wire up /weather
